@@ -1,0 +1,55 @@
+<template>
+  <form @submit="onSubmit">
+    <input type="text" v-model="title" />
+    <input type="submit" value="Add" />
+  </form>
+</template>
+
+<script>
+import { mapActions } from "vuex";
+import { v4 as v4uuid } from "uuid";
+
+export default {
+  name: "TodoFrom",
+  data() {
+    return {
+      title: "",
+    };
+  },
+  methods: {
+    ...mapActions(["addTodo"]),
+
+    onSubmit(event) {
+      event.preventDefault();
+      this.addTodo({
+        id: v4uuid(),
+        title: this.title,
+        completed: false,
+      });
+
+        this.title = ''
+    },
+  },
+};
+</script>
+
+<style scoped>
+form {
+  padding: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 6px 0;
+  border: 0;
+}
+
+input[type="submit"] {
+  margin: 10px auto;
+  padding: 10px;
+  border: 0;
+  display: block;
+}
+</style>
